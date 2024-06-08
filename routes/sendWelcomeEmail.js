@@ -1,9 +1,9 @@
-const nodeMailer = require("nodemailer");
+const nodeMailer = require('nodemailer');
 
 async function sendMail(email) {
-    const username = email.split('@')[0];
+  const username = email.split('@')[0];
 
-    const html = `
+  const html = `
     <!DOCTYPE html>
     <html lang="en">
     <head>
@@ -47,26 +47,24 @@ async function sendMail(email) {
     </html>    
 `;
 
+  const transporter = nodeMailer.createTransport({
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: true,
+    auth: {
+      user: 'hcmutbcb@gmail.com',
+      pass: 'ivzq lche cinx mfvl'
+    }
+  });
 
-    const transporter = nodeMailer.createTransport({
-        host: 'smtp.gmail.com',
-        port: 465,
-        secure: true,
-        auth: {
-            user: 'hcmutbcb@gmail.com',
-            pass: 'ivzq lche cinx mfvl'
-        }
-    })
+  const info = await transporter.sendMail({
+    from: 'hcmutbcb@gmail.com',
+    to: email,
+    subject: 'Xác nhận đăng kí vào BCB thành công',
+    html: html
+  });
 
-    const info = await transporter.sendMail({
-        from: 'hcmutbcb@gmail.com',
-        to: email,
-        subject: 'Xác nhận đăng kí vào BCB thành công',
-        html: html,
-    })
-
-    console.log("Message sent: " + info.messageId);
-
+  console.log('Message sent: ' + info.messageId);
 }
 
 // dùng để test
