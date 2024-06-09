@@ -3,7 +3,10 @@ const router = express.Router();
 const db = require('../db/index');
 
 router.get('/notif', async (req, res) => {
-  let { data: notifData, error } = await db.from('notification').select('*');
+  let { data: notifData, error } = await db
+    .from('notification')
+    .select('*')
+    .order('notification_id', { ascending: true });
 
   if (error) {
     console.error('Error fetching notifications:', error);
