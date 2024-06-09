@@ -18,7 +18,7 @@ router.get('/notif', async (req, res) => {
     console.log('Notification found');
   } else {
     res.json({ notifData: [] });
-    console.log('No notification');
+    console.log('No Notification');
   }
 });
 
@@ -35,10 +35,10 @@ router.get('/news', async (req, res) => {
 
   if (newsData && newsData.length > 0) {
     res.json({ newsData: newsData });
-    console.log('Bang Tin found');
+    console.log('News found');
   } else {
     res.json({ newsData: [] });
-    console.log('No Bang Tin');
+    console.log('No News');
   }
 });
 
