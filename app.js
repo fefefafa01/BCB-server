@@ -12,7 +12,7 @@ const CourtDetail = require('./routes/CourtDetail');
 const joinYard = require('./routes/joinYard.js');
 const saveFrame = require('./routes/saveFrame.js');
 const auth = require('./routes/auth.js');
-const home = require('/routes/home.js');
+const home = require('./routes/home.js');
 
 dotenv.config();
 
