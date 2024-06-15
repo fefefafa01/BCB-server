@@ -4,15 +4,15 @@ const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
 
 const index = require('./routes/index.js');
-const usersRouter = require('./routes/users.js');
+const home = require('./routes/home.js');
+const auth = require('./routes/auth.js');
+
 const listOfCourtRouter = require('./routes/listOfCourt.js');
 const changeAdminInfo = require('./routes/changeAdminInfo.js');
 const overView = require('./routes/overView.js');
 const CourtDetail = require('./routes/CourtDetail');
 const joinYard = require('./routes/joinYard.js');
 const saveFrame = require('./routes/saveFrame.js');
-const auth = require('./routes/auth.js');
-const home = require('./routes/home.js');
 
 dotenv.config();
 
@@ -24,7 +24,6 @@ app.use(bodyParser.json());
 app.use('/', index);
 app.use('/auth', auth);
 app.use('/home', home);
-app.use('/users', usersRouter);
 app.use('/listOfCourt', listOfCourtRouter);
 app.use('/changeAdminInfo', changeAdminInfo);
 app.use('/overView', overView);

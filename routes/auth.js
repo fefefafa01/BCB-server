@@ -9,11 +9,8 @@ router.post('/login', async (req, res) => {
   const { email, password } = req.body;
   console.log({ email, password });
   if (email !== '' && password !== '') {
-    // var loginInfo = await db.query(
-    //     "Select * from customer where email = $1",
-    //     [req.body.email]);
     const { data: loginInfo, error: loginError } = await db
-      .from('customer')
+      .from('user')
       .select('*')
       .eq('email', email);
     if (loginInfo && loginInfo.length > 0) {
@@ -25,56 +22,21 @@ router.post('/login', async (req, res) => {
           status: 'Successful',
           name: loginInfo[0].name,
           email: email,
-          customerId: loginInfo[0].customer_id
+          customerId: loginInfo[0].user_id
         });
       } else {
         res.json({ loggedIn: false, status: 'Wrong Password' });
         console.log('Wrong Password:', password);
       }
-    } else {
-      const { data: loginInfo, error: loginError } = await db
-        .from('admin')
-        .select('*')
-        .eq('email', email);
-      // loginInfo = await db.query(
-      //     "Select * from admin where email = $1",
-      //     [req.body.email]);
-      if (loginError) {
-        console.error(loginError);
-        return;
-      }
-      if (loginInfo && loginInfo.length > 0) {
-        const match = await bcrypt.compare(password, loginInfo[0].password);
-        console.log('match', match);
-        if (match) {
-          // if (req.body.password === loginInfo[0].password) {
-          res.json({
-            AdminloggedIn: true,
-            status: 'Successful',
-            name: loginInfo[0].name,
-            email: email
-          });
-          console.log({ status: 'Successful' });
-        } else {
-          res.json({ AdminloggedIn: false, status: 'Wrong Password' });
-          console.log('Wrong Password:', password);
-        }
-      } else {
-        res.json({ loggedIn: false, status: 'Wrong Email' });
-        console.log('Wrong Email:', email);
-      }
     }
   }
 });
 
-router.post('/', async (req, res) => {
+router.post('/register', async (req, res) => {
   // console.log(req.body);
   const { email, name, password } = req.body;
   console.log({ email, name, password });
-  const { data: regInfo, error: regError } = await db
-    .from('customer')
-    .select('*')
-    .eq('email', email);
+  const { data: regInfo, error: regError } = await db.from('user').select('*').eq('email', email);
   // const regInfo = await db.query(
   //     "Select * from customer where email = $1",
   //     [req.body.email]);
@@ -140,7 +102,7 @@ router.post('/', async (req, res) => {
       port: 465,
       secure: true,
       auth: {
-        user: 'hcmutbcb@gmail.com',
+        user: 'BCB_HCM@gmail.com',
         pass: 'ivzq lche cinx mfvl'
       }
     });
@@ -156,8 +118,8 @@ router.post('/', async (req, res) => {
     //kết thúc gửi thông báo đã đăng kí thành công tới email khách hàng
 
     const { data: createNewCustomer, error: errorCreate } = await db
-      .from('customer')
-      .insert([{ name: name, email: email, password: hashedPass }])
+      .from('user')
+      .insert([{ name: name, email: email, password: hashedPass, role_id: 1 }])
       .select();
     if (errorCreate) {
       console.error(errorCreate);
@@ -181,7 +143,7 @@ router.post('/resetPwd', async (req, res) => {
   //     ]);
   const { email, password } = req.body;
   const { data: resetInfo, error: errorReset } = await db
-    .from('customer')
+    .from('user')
     .select('*')
     .eq('email', email);
 
