@@ -136,7 +136,7 @@ router.post('/register', async (req, res) => {
   }
 });
 
-router.post('/resetPwd', async (req, res) => {
+router.post('/forgetPwd', async (req, res) => {
   // const resetInfo = await db.query(
   //     `Select * from customer where email = $1`, [
   //         req.body.email
@@ -159,7 +159,7 @@ router.post('/resetPwd', async (req, res) => {
     //     [hashPass, req.body.email]
     // )
     const { error } = await db
-      .from('customer')
+      .from('user')
       .update({ password: hashPass })
       .eq('email', email)
       .select();
@@ -167,9 +167,9 @@ router.post('/resetPwd', async (req, res) => {
       console.error(errorReset);
       return;
     }
-    res.json({ status: 'Successful', email: email, newPassword: hashPass });
+    res.json({ resetPwd: true, email: email, newPassword: hashPass });
   } else {
-    res.json({ status: 'Wrong Email', email: email });
+    res.json({ resetPwd: false, email: email });
   }
 });
 
