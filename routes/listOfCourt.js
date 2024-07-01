@@ -2,14 +2,10 @@ const express = require('express');
 const router = express.Router();
 const db = require('../db/index');
 
-router.post('/', async (req, res) => {
-  const { district } = req.body;
-  // if(req.body.district) {
-  //     res.json({ hap: true, status: "Successful"});
-  // }
+router.get('/', async (req, res) => {
+  const { district } = req.query;
+  console.log(req.query);
   if (district == '' || district == 'Tất cả') {
-    // var yardInfo = await db.query(
-    //     "Select * from badminton_yard");
     const { data: yardInfo, error: errorYard } = await db.from('badminton_yard').select('*');
 
     if (errorYard) {
@@ -25,9 +21,6 @@ router.post('/', async (req, res) => {
       res.json({ data: [], status: 'Failed' });
     }
   } else {
-    // var yardInfo = await db.query(
-    //     "Select * from badminton_yard where address like $1",
-    //     '%'+[req.body.district] + '%');
     const { data: yardInfo, error: errorYard } = await db
       .from('badminton_yard')
       .select('*')
