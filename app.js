@@ -6,11 +6,10 @@ const dotenv = require('dotenv');
 const index = require('./routes/index.js');
 const home = require('./routes/home.js');
 const auth = require('./routes/auth.js');
+const courts = require('./routes/courtsRouter.js');
 
-const listOfCourtRouter = require('./routes/listOfCourt.js');
 const changeAdminInfo = require('./routes/changeAdminInfo.js');
 const overView = require('./routes/overView.js');
-const CourtDetail = require('./routes/CourtDetail');
 const joinYard = require('./routes/joinYard.js');
 const saveFrame = require('./routes/saveFrame.js');
 
@@ -24,10 +23,10 @@ app.use(bodyParser.json());
 app.use('/', index);
 app.use('/auth', auth);
 app.use('/home', home);
-app.use('/listOfCourt', listOfCourtRouter);
+app.use('/courts', courts);
+
 app.use('/changeAdminInfo', changeAdminInfo);
 app.use('/overView', overView);
-app.use('/CourtDetail', CourtDetail);
 app.use('/joinYard', joinYard);
 app.use('/saveFrame', saveFrame);
 
